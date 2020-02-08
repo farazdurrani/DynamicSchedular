@@ -23,9 +23,7 @@ public class DynamicSchedularApplication implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		ThreadPoolTaskScheduler ts = threadPoolTaskScheduler();
 		for (int i = 0; i < 3; i++) {
-			ts.scheduleAtFixedRate(() -> System.out
-				.println("Running in Thread ID: " + Thread.currentThread()
-					.getId()),
+			ts.scheduleAtFixedRate(new MyRunnable("Task"+i),
 				Duration.ofMillis(3000));
 		}
 	}
@@ -37,7 +35,7 @@ public class DynamicSchedularApplication implements ApplicationRunner {
 		return ts;
 	}
 	
-	@Scheduled(initialDelay = 3000, fixedRate = 3000)
+	@Scheduled(initialDelay = 30000, fixedRate = 30000)
 	public void task() {
 		System.out.println("Task 'Scheduled' Running in Thread ID: " + Thread.currentThread().getId());
 	}
